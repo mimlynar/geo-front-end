@@ -1,0 +1,50 @@
+<div class="container">
+  <h2>points of {{project.name}} project</h2>
+  <div>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">number</th>
+        <th scope="col">x</th>
+        <th scope="col">y</th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+
+
+      <tr *ngFor="let point of points; let i = index">
+        <td>
+          {{i}}
+        </td>
+        <td>
+          <input [(ngModel)]="point.number"/>
+        </td>
+        <td>
+          <input [(ngModel)]="point.x"/>
+        </td>
+        <td>
+          <input [(ngModel)]="point.y"/>
+        </td>
+        <td>
+          <button (click)="delete(point)" type="button" class="btn btn-danger btn-sm">x</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+    <div class="btn-group mr-2" role="group" aria-label="first group">
+      <button (click)="save()" type="button" class="btn btn-success">save</button>
+    </div>
+    <div class="btn-group mr-2" role="group" aria-label="second group">
+      <button (click)="createNewEntry()" type="button" class="btn btn-info">add</button>
+    </div>
+    <div class="btn-group mr-2" role="group" aria-label="third group">
+      <button (click)="goBack()" type="button" class="btn btn-secondary">project</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<div class="container">
+  <h3>projects</h3>
+
+  <table class="table table-hover table-striped">
+    <thead>
+    <tr>
+      <td>#</td>
+      <td>project name</td>
+      <td>delete</td>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let project of projects; let i = index">
+
+      <td>{{i}}</td>
+      <td>
+        <a routerLink="/projects/{{project.id}}">
+          {{project.name}}
+        </a>
+      </td>
+      <td>
+        <button (click)="delete(project)" type="button" class="btn btn-danger" >delete</button>
+      </td>
+
+    </tr>
+    </tbody>
+  </table>
+
+  <div>
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+      <div class="btn-group mr-2" role="group" aria-label="First group">
+        <button type="button" class="btn btn-success" routerLink="/projects/new">add new project</button>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,47 @@
+<div class="container">
+  <h3>{{project.name}}</h3>
+  <div>
+
+    <table class="table table-hover table-striped">
+      <thead>
+      <tr>
+        <td>#</td>
+        <td>project name</td>
+        <td>delete</td>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let task of project.polarTasks; let i = index">
+
+        <td>{{i}}</td>
+        <td>
+          <a routerLink="task/{{task.id}}">
+            {{task.name}}
+          </a>
+        </td>
+        <td>
+          <button type="button" class="btn btn-danger" > delete</button>
+        </td>
+
+      </tr>
+      </tbody>
+    </table>
+
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+      <div class="btn-group mr-2" role="group" aria-label="First group">
+        <button type="button" class="btn btn-success" routerLink="task">add new task</button>
+      </div>
+      <div class="btn-group mr-2" role="group" aria-label="Second group">
+        <button type="button" class="btn btn-secondary" routerLink="/projects">dashboard</button>
+      </div>
+      <div class="btn-group" role="group" aria-label="Third group">
+        <button type="button" class="btn btn-secondary"  routerLink="points">point table</button>
+      </div>
+    </div>
+
+
+  </div>
+
+
+</div>

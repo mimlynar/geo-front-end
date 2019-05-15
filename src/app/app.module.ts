@@ -9,6 +9,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {ProjectCreationComponent} from './project-creation/project-creation.component';
 import {PolarTaskCreationComponent} from './polar-task-creation/polar-task-creation.component';
 import {PointsComponent} from './points/points.component';
+import { HttpClientModule }    from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import {PointsComponent} from './points/points.component';
     BrowserModule,
     FormsModule,
     AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,17 +3,21 @@ import {Project} from "./project";
 import {Observable, of} from "rxjs";
 import {PROJECTS} from "./projects-mock";
 import {log} from "util";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
 
-  constructor() {
+  private projectUrl= 'http://localhost:8080/project';
+
+  constructor(
+  private http: HttpClient) {
   }
 
   getProjects(): Observable<Project[]> {
-    return of(PROJECTS);
+    return this.http.get<Project[]>(this.projectUrl);
   }
 
 

@@ -10,6 +10,7 @@ const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json'
   })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,7 @@ export class ProjectService {
   }
 
   save(project: Project) {
-    this.http.post<Project>(this.projectUrl, project, httpOptions);
+    this.http.post<Project>(this.projectUrl, project).subscribe(project));
     log("project " + project.name + " saved");
   }
 }

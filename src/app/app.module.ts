@@ -10,6 +10,8 @@ import {ProjectCreationComponent} from './project-creation/project-creation.comp
 import {PolarTaskCreationComponent} from './polar-task-creation/polar-task-creation.component';
 import {PointsComponent} from './points/points.component';
 import { HttpClientModule }    from '@angular/common/http';
+import { HttpModule } from '@angular/http';
+
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { HttpClientModule }    from '@angular/common/http';
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    HttpModule
   ],
   providers: [],
   bootstrap: [AppComponent]

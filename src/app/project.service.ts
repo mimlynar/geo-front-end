@@ -4,6 +4,12 @@ import {Observable, of} from "rxjs";
 import {PROJECTS} from "./projects-mock";
 import {log} from "util";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json'
+  })
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +32,7 @@ export class ProjectService {
   }
 
   save(project: Project) {
+    this.http.post<Project>(this.projectUrl, project, httpOptions);
     log("project " + project.name + " saved");
   }
 }

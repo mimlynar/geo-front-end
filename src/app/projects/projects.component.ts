@@ -28,11 +28,9 @@ export class ProjectsComponent implements OnInit {
   }
 
   delete(project: Project) {
-    let index: number = this.projects.indexOf(project);
-    if (index !== -1) {
-      this.projects.splice(index, 1);
-    }
-  }
+    this.projectService.remove(project);
+    this.loadProjects();
+}
 
   private loadProjects() {
     this.projectService.getProjects()

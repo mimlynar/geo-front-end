@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Project} from "./project";
-import {Observable, of} from "rxjs";
-import {PROJECTS} from "./projects-mock";
+import {Observable} from "rxjs";
 import {log} from "util";
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
@@ -26,10 +25,9 @@ export class ProjectService {
     return this.http.get<Project[]>(this.projectUrl);
   }
 
-
   getProject(projectId: number): Observable<Project> {
     let endPointUrl = this.projectUrl+ "/" + projectId;
-    return this.http.get(endPointUrl);
+    return this.http.get<Project>(endPointUrl);
   }
 
   save(project: Project): Observable<Project> {
@@ -37,9 +35,9 @@ export class ProjectService {
     return this.http.post<Project>(this.projectUrl, project);
   }
 
-  remove(project: Project): Observable<Object> {
+  remove(project: Project): Observable<Project> {
   let endPointUrl = this.projectUrl+ "/" + project.id;
     log("project " + project.name + " removing");
-    return this.http.delete(endPointUrl, httpOptions);
+    return this.http.delete<Project>(endPointUrl, httpOptions);
   }
 }

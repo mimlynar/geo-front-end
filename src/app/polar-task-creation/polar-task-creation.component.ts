@@ -12,6 +12,7 @@ import {PolarService} from "../polar.service";
 export class PolarTaskCreationComponent implements OnInit {
 
   task: PolarTask;
+  projectId: number;
 
   constructor(
     private location: Location,
@@ -23,6 +24,7 @@ export class PolarTaskCreationComponent implements OnInit {
 
   ngOnInit() {
     this.task = new PolarTask();
+    this.getCurrentProjectId();
   }
 
   close(): void {
@@ -30,16 +32,19 @@ export class PolarTaskCreationComponent implements OnInit {
   }
 
   create(): void {
+    this.task.projectId = this.projectId;
     this.taskService.save(this.task)
       .subscribe(task => {
-        this.router.navigateByUrl("projects/" + this.getCurrentProjectId() + "/task/" + task.id)
+        this.router.navigate(["projects", this.projectId, "task", task.id]);
         ;
       });
 
   }
 
-  private getCurrentProjectId(): number {
-    let idFromUrl = this.route.snapshot.paramMap.get('projectId');
-    return idFromUrl !== null ? +idFromUrl : null;
+  private getCurrentProjectId() {
+    this.route.params.subscribe(params => {
+      this.projectId = params['projectId'];
+      console.log(this.projectId)
+    });
   }
 }

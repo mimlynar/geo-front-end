@@ -1,16 +1,20 @@
 import {Injectable} from '@angular/core';
 import {PolarObservation} from "./polarObservation";
 import {Observable, of} from "rxjs";
-import {POLAR_TASKS} from "./polar-tasks-mock";
 import {PolarTask} from "./polarTask";
 import {POLAR_TASK} from "./polar-task-mock";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PolarService {
 
-  constructor() {
+  private taskUrl = 'http://localhost:9999/polar';
+
+  constructor(
+    private http: HttpClient) {
+
   }
 
   get(id: number): Observable<PolarTask> {
@@ -26,14 +30,12 @@ export class PolarService {
   }
 
   findTasksByProjectId(projectId: number): Observable<PolarTask[]> {
-    return of(POLAR_TASKS);
+    let endPoint = this.taskUrl + "/" + projectId;
+    return this.http.get<PolarTask[]>(endPoint);
   }
 
   save(task: PolarTask): Observable<PolarTask> {
-    console.log("task saved");
-    let polarTask = new PolarTask();
-    polarTask.id= 14;
-    return of(polarTask);
+    return this.http.post<PolarTask>(this.taskUrl, task);
   }
 
   remove(taskId: number): void {

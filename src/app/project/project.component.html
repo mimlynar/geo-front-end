@@ -1,5 +1,5 @@
 <div class="container">
-  <h3>{{project.name}}</h3>
+  <h3 *ngIf="project != null">{{project.name}}</h3>
   <div>
 
     <table class="table table-hover table-striped">
@@ -12,7 +12,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let task of project.polarTasks; let i = index">
+      <tr *ngFor="let task of polarTasks; let i = index">
 
         <td>{{i}}</td>
         <td>

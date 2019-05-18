@@ -3,7 +3,13 @@ import {PolarObservation} from "./polarObservation";
 import {Observable, of} from "rxjs";
 import {PolarTask} from "./polarTask";
 import {POLAR_TASK} from "./polar-task-mock";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +44,8 @@ export class PolarService {
     return this.http.post<PolarTask>(this.taskUrl, task);
   }
 
-  remove(taskId: number): void {
-    console.log("task removed");
+  remove(taskId: number): Observable<PolarTask> {
+    let endPoint = this.taskUrl + "/" + taskId;
+    return this.http.delete<PolarTask>(endPoint, httpOptions);
   }
 }

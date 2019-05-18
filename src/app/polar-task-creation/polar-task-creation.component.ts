@@ -34,11 +34,11 @@ export class PolarTaskCreationComponent implements OnInit {
   create(): void {
     this.task.projectId = this.projectId;
     this.taskService.save(this.task)
-      .subscribe(this.redirectToTaskView);
+      .subscribe(task =>this.redirectToTaskView(task));
   }
 
   private redirectToTaskView(task) {
-    return this.router.navigate(["projects", this.projectId, "task", task.id]);
+     this.router.navigate(["projects", this.projectId, "task", task.id]);
   }
 
   private getCurrentProjectId() {

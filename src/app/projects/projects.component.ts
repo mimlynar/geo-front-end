@@ -30,7 +30,7 @@ export class ProjectsComponent implements OnInit {
     if (index !== -1) {
       this.projects.splice(index, 1);
     }
-}
+  }
 
   private loadProjects() {
     this.projectService.getProjects()

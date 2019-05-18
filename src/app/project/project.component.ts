@@ -40,4 +40,17 @@ export class ProjectComponent implements OnInit {
     this.polarService.findTasksByProjectId(this.projectId).subscribe(tasks => this.polarTasks = tasks);
   }
 
+
+  delete(task: PolarTask) {
+    this.polarService.remove(task.id)
+      .subscribe(() => this.removeTaskFromList(task));
+  }
+
+  private removeTaskFromList(task: PolarTask) {
+    let index: number = this.polarTasks.indexOf(task);
+    if (index !== -1) {
+      this.polarTasks.splice(index, 1);
+    }
+  }
+
 }

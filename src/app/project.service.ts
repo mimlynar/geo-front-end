@@ -28,7 +28,8 @@ export class ProjectService {
 
 
   getProject(projectId: number): Observable<Project> {
-    return of(PROJECTS[0]);
+    let endPointUrl = this.projectUrl+ "/" + projectId;
+    return this.http.get(endPointUrl);
   }
 
   save(project: Project): Observable<Project> {

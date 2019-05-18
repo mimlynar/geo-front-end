@@ -15,7 +15,7 @@
 
       <td>{{i}}</td>
       <td>
-        <a routerLink="/projects/{{project.id}}">
+        <a [routerLink]="[project.id]">
           {{project.name}}
         </a>
       </td>

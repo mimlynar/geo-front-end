@@ -3,7 +3,7 @@ import {Project} from "./project";
 import {Observable, of} from "rxjs";
 import {PROJECTS} from "./projects-mock";
 import {log} from "util";
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -16,7 +16,7 @@ const httpOptions = {
 })
 export class ProjectService {
 
-  private projectUrl= 'http://localhost:8080/project';
+  private projectUrl = 'http://localhost:9999/project';
 
   constructor(
   private http: HttpClient) {
@@ -31,14 +31,14 @@ export class ProjectService {
     return of(PROJECTS[0]);
   }
 
-  save(project: Project) {
-    this.http.post<Project>(this.projectUrl, project).subscribe();
+  save(project: Project): Observable<Project> {
     log("project " + project.name + " saved");
+    return this.http.post<Project>(this.projectUrl, project);
   }
 
-  remove(project: Project){
+  remove(project: Project): Observable<Object> {
   let endPointUrl = this.projectUrl+ "/" + project.id;
-    this.http.delete(endPointUrl, httpOptions).subscribe();
-    log("project " + project.name + " removed");
+    log("project " + project.name + " removing");
+    return this.http.delete(endPointUrl, httpOptions);
   }
 }

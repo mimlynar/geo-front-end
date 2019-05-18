@@ -25,8 +25,9 @@ export class ProjectCreationComponent implements OnInit {
   }
 
   createProject(): void {
-    this.projectService.save(this.project);
-    this.router.navigateByUrl("");
+    this.projectService.save(this.project).subscribe(success=>{
+      this.router.navigateByUrl("");
+    });
   }
 
   close(): void {

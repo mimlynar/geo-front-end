@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ProjectService} from "../project.service";
 import {Project} from "../project";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {ProjectCreationComponent} from "../project-creation/project-creation.component";
 
 @Component({
   selector: 'app-projects',
@@ -15,12 +13,7 @@ export class ProjectsComponent implements OnInit {
 
   constructor(
     private projectService: ProjectService,
-    private modalService: NgbModal
   ) {
-  }
-
-  open() {
-    const modalRef = this.modalService.open(ProjectCreationComponent);
   }
 
   ngOnInit() {
@@ -28,8 +21,15 @@ export class ProjectsComponent implements OnInit {
   }
 
   delete(project: Project) {
-    this.projectService.remove(project);
-    this.loadProjects();
+    this.projectService.remove(project)
+      .subscribe(() => this.removeProjectFromList(project));
+  }
+
+  private removeProjectFromList(project: Project) {
+    let index: number = this.projects.indexOf(project);
+    if (index !== -1) {
+      this.projects.splice(index, 1);
+    }
 }
 
   private loadProjects() {

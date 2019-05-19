@@ -75,6 +75,7 @@ export class PolarTaskComponent implements OnInit {
 
   private createNewEntry(): PolarObservation {
     let observation: PolarObservation = new PolarObservation();
+    observation.target = new Point();
     return observation;
   }
 

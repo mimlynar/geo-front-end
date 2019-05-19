@@ -33,6 +33,7 @@ export class PolarTaskCreationComponent implements OnInit {
 
   create(): void {
     this.task.projectId = this.projectId;
+    this.task.observations = [];
     this.taskService.save(this.task)
       .subscribe(task =>this.redirectToTaskView(task));
   }

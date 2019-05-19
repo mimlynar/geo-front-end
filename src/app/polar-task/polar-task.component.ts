@@ -12,6 +12,9 @@ import {PolarTask} from "../polarTask";
 })
 export class PolarTaskComponent implements OnInit {
 
+  private projectUrl = 'http://localhost:9999/project';
+
+
   constructor(
     private polarService: PolarService,
     private route: ActivatedRoute,
@@ -20,13 +23,14 @@ export class PolarTaskComponent implements OnInit {
   }
 
   task: PolarTask;
-  standPoint: Point;
+  taskId: number;
+  standPoint: Point = new Point();
   observations: PolarObservation[] = [];
 
   ngOnInit() {
+    this.getCurrentTaskId();
     this.loadPolarTask();
-    this.extractObservations();
-    this.initializeStandPoint();
+    //this.initializeStandPoint();
   }
 
   addEmptyRows(): void {
@@ -55,14 +59,17 @@ export class PolarTaskComponent implements OnInit {
   }
 
   private loadPolarTask() {
-    let id = this.getCurrentTaskId();
-    this.polarService.get(id)
-      .subscribe(task => this.task = task);
+    this.polarService.get(this.taskId)
+      .subscribe(task => {
+        this.task = task;
+        this.observations = task.observations
+      });
   }
 
-  private getCurrentTaskId(): number {
-    let idFromUrl = this.route.snapshot.paramMap.get('id');
-    return idFromUrl !== null ? +idFromUrl : null;
+  private getCurrentTaskId() {
+    this.route.params.subscribe(params => {
+      this.taskId = params['taskId'], console.log(this.taskId)
+    });
   }
 
   private isValueUndefined(value: any): boolean {
@@ -77,12 +84,6 @@ export class PolarTaskComponent implements OnInit {
 
   private assignStandPoint(): void {
     this.observations.forEach(observation => observation.stand = this.standPoint);
-  }
-
-  private extractObservations(): void {
-    if (this.task.observations) {
-      this.observations = this.task.observations;
-    }
   }
 
   private initializeStandPoint(): void {

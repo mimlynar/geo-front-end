@@ -24,7 +24,7 @@ const routes: Routes = [
                 path: 'task', children:
                   [
                     {path: '', component: PolarTaskCreationComponent},
-                    {path: ':id', component: PolarTaskComponent}
+                    {path: ':taskId', component: PolarTaskComponent}
                   ]
               }
             ]

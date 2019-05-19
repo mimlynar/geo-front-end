@@ -19,18 +19,11 @@ export class PolarService {
 
   constructor(
     private http: HttpClient) {
-
   }
 
-  get(taskId: number): Observable<PolarTask> {
+  getOne(taskId: number): Observable<PolarTask> {
     let endPoint = this.taskUrl + "/" + taskId;
     return this.http.get<PolarTask>(endPoint);
-
-  }
-
-  resolve(observations: PolarObservation[]): Observable<PolarObservation[]> {
-    console.log("task resolved");
-    return of([]);
   }
 
   save(task: PolarTask): Observable<PolarTask> {
@@ -41,4 +34,10 @@ export class PolarService {
     let endPoint = this.taskUrl + "/" + taskId;
     return this.http.delete<PolarTask>(endPoint, httpOptions);
   }
+
+  resolve(observations: PolarObservation[]): Observable<PolarObservation[]> {
+    console.log("task resolved");
+    return of([]);
+  }
+
 }

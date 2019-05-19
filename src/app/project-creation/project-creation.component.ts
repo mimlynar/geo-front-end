@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Project} from "../project";
 import {ProjectService} from "../project.service";
 import {Router} from "@angular/router";
-import {Location} from "@angular/common";
 
 @Component({
   selector: 'app-new-project',
@@ -11,32 +10,24 @@ import {Location} from "@angular/common";
 })
 export class ProjectCreationComponent implements OnInit {
 
-  project: Project;
+  project: Project = new Project();
 
   constructor(
     private projectService: ProjectService,
     private router: Router,
-    private location: Location,
   ) {
   }
 
   ngOnInit() {
-    this.initializeProject();
   }
 
   createProject(): void {
-    this.projectService.save(this.project).subscribe(success=>{
-      this.router.navigateByUrl("");
-    });
+    this.projectService.save(this.project)
+      .subscribe(success => this.redirectToProjects());
   }
 
-  close(): void {
-    this.location.back();
-  }
-
-  private initializeProject(): void {
-    this.project = new Project();
-    this.project.polarTasks = [];
+  private redirectToProjects() {
+    this.router.navigate(["projects"]);
   }
 
 }

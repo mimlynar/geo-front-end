@@ -7,12 +7,10 @@
       <td>#</td>
       <td>project name</td>
       <td>delete</td>
-
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let project of projects; let i = index">
-
       <td>{{i}}</td>
       <td>
         <a [routerLink]="[project.id]">
@@ -22,7 +20,6 @@
       <td>
         <button (click)="delete(project)" type="button" class="btn btn-danger" >delete</button>
       </td>
-
     </tr>
     </tbody>
   </table>

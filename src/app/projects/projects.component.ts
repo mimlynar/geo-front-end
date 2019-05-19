@@ -33,7 +33,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   private loadProjects() {
-    this.projectService.getProjects()
+    this.projectService.getAll()
       .subscribe(projects => this.projects = projects);
   }
 }

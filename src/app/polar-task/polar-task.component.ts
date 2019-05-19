@@ -12,9 +12,6 @@ import {PolarTask} from "../polarTask";
 })
 export class PolarTaskComponent implements OnInit {
 
-  private projectUrl = 'http://localhost:9999/project';
-
-
   constructor(
     private polarService: PolarService,
     private route: ActivatedRoute,
@@ -24,31 +21,23 @@ export class PolarTaskComponent implements OnInit {
 
   task: PolarTask;
   taskId: number;
+  projectId: number;
   standPoint: Point = new Point();
   observations: PolarObservation[] = [];
 
   ngOnInit() {
+    this.getCurrentProjectId();
     this.getCurrentTaskId();
-    this.loadPolarTask();
-    //this.initializeStandPoint();
-  }
-
-  addEmptyRows(): void {
-    this.task.observations.push(this.createNewEntry());
-  }
-
-  resolveTask(): void {
-    this.assignStandPoint();
-    this.polarService.resolve(this.task.observations)
-      .subscribe(observations => this.task.observations = observations);
+    this.loadPolarTaskAndObservations();
+    this.resolveStandPoint();
   }
 
   save(): void {
     this.polarService.save(this.task);
   }
 
-  goBack() {
-    this.router.navigateByUrl("projects/" + this.getCurrentProjectId());
+  addEmptyRows(): void {
+    this.task.observations.push(this.createNewEntry());
   }
 
   delete(observation: PolarObservation) {
@@ -58,8 +47,18 @@ export class PolarTaskComponent implements OnInit {
     }
   }
 
-  private loadPolarTask() {
-    this.polarService.get(this.taskId)
+  resolveTask(): void {
+    this.assignStandPoint();
+    this.polarService.resolve(this.task.observations)
+      .subscribe(observations => this.task.observations = observations);
+  }
+
+  redirectToProject() {
+    this.router.navigate(["projects", this.projectId]);
+  }
+
+  private loadPolarTaskAndObservations() {
+    this.polarService.getOne(this.taskId)
       .subscribe(task => {
         this.task = task;
         this.observations = task.observations
@@ -67,9 +66,7 @@ export class PolarTaskComponent implements OnInit {
   }
 
   private getCurrentTaskId() {
-    this.route.params.subscribe(params => {
-      this.taskId = params['taskId'], console.log(this.taskId)
-    });
+    this.route.params.subscribe(params => this.taskId = params['taskId']);
   }
 
   private isValueUndefined(value: any): boolean {
@@ -78,7 +75,6 @@ export class PolarTaskComponent implements OnInit {
 
   private createNewEntry(): PolarObservation {
     let observation: PolarObservation = new PolarObservation();
-    observation.target = new Point();
     return observation;
   }
 
@@ -86,26 +82,17 @@ export class PolarTaskComponent implements OnInit {
     this.observations.forEach(observation => observation.stand = this.standPoint);
   }
 
-  private initializeStandPoint(): void {
-    this.standPoint = this.resolveStandPoint();
-  }
-
-  private resolveStandPoint(): Point {
+  private resolveStandPoint() {
     let firstObservation = this.observations[0];
     if (firstObservation) {
 
       if (!this.isValueUndefined(firstObservation.stand)) {
-        return firstObservation.stand;
+        this.standPoint = firstObservation.stand;
       }
-    }
-
-    if (this.isValueUndefined(this.standPoint)) {
-      return new Point();
     }
   }
 
-  private getCurrentProjectId(): number {
-    let idFromUrl = this.route.snapshot.paramMap.get('projectId');
-    return idFromUrl !== null ? +idFromUrl : null;
+  private getCurrentProjectId() {
+    this.route.params.subscribe(params => this.projectId = params['projectId']);
   }
 }

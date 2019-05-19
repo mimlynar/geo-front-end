@@ -56,7 +56,7 @@ export class PointsComponent implements OnInit {
 
   private loadCurrentProject() {
     let projectId = this.getCurrentProjectId();
-    this.projectService.getProject(projectId).subscribe(project => this.project = project);
+    this.projectService.getOne(projectId).subscribe(project => this.project = project);
 
   }
 

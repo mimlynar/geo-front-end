@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {PolarTask} from "../polarTask";
-import {Location} from "@angular/common";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PolarService} from "../polar.service";
 
@@ -11,11 +10,10 @@ import {PolarService} from "../polar.service";
 })
 export class PolarTaskCreationComponent implements OnInit {
 
-  task: PolarTask;
+  task: PolarTask = new PolarTask();
   projectId: number;
 
   constructor(
-    private location: Location,
     private router: Router,
     private taskService: PolarService,
     private route: ActivatedRoute,
@@ -23,12 +21,7 @@ export class PolarTaskCreationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.task = new PolarTask();
     this.getCurrentProjectId();
-  }
-
-  close(): void {
-    this.location.back();
   }
 
   create(): void {
@@ -38,14 +31,15 @@ export class PolarTaskCreationComponent implements OnInit {
       .subscribe(task =>this.redirectToTaskView(task));
   }
 
+  redirectToProject() {
+    this.router.navigate(["projects", this.projectId]);
+  }
+
   private redirectToTaskView(task) {
      this.router.navigate(["projects", this.projectId, "task", task.id]);
   }
 
   private getCurrentProjectId() {
-    this.route.params.subscribe(params => {
-      this.projectId = params['projectId'];
-      console.log(this.projectId)
-    });
+    this.route.params.subscribe(params => this.projectId = params['projectId']);
   }
 }

@@ -24,11 +24,16 @@ export class ProjectComponent implements OnInit {
 
   ngOnInit() {
     this.getCurrentProjectId();
-    this.getCurrentProject();
+    this.loadCurrentProjectAndTasks();
   }
 
-  private getCurrentProject() {
-    this.projectService.getProject(this.projectId).subscribe(project => {
+  delete(task: PolarTask) {
+    this.polarService.remove(task.id)
+      .subscribe(() => this.removeTaskFromList(task));
+  }
+
+  private loadCurrentProjectAndTasks() {
+    this.projectService.getOne(this.projectId).subscribe(project => {
       this.project = project;
       this.polarTasks = project.polarTasks;
     });
@@ -36,11 +41,6 @@ export class ProjectComponent implements OnInit {
 
   private getCurrentProjectId(): void {
     this.route.params.subscribe(parameters => this.projectId = parameters['projectId']);
-  }
-
-  delete(task: PolarTask) {
-    this.polarService.remove(task.id)
-      .subscribe(() => this.removeTaskFromList(task));
   }
 
   private removeTaskFromList(task: PolarTask) {

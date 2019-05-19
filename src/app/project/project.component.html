@@ -8,12 +8,10 @@
         <td>#</td>
         <td>task name</td>
         <td>delete</td>
-
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let task of polarTasks; let i = index">
-
         <td>{{i}}</td>
         <td>
           <a routerLink="task/{{task.id}}">
@@ -23,7 +21,6 @@
         <td>
           <button type="button" (click)="delete(task)" class="btn btn-danger"> delete</button>
         </td>
-
       </tr>
       </tbody>
     </table>
@@ -40,8 +37,5 @@
       </div>
     </div>
 
-
   </div>
-
-
 </div>

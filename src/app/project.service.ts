@@ -15,29 +15,27 @@ const httpOptions = {
 })
 export class ProjectService {
 
-  private projectUrl = 'http://localhost:9999/project';
+  private endPoint = 'http://localhost:9999/project';
 
   constructor(
   private http: HttpClient) {
   }
 
-  getProjects(): Observable<Project[]> {
-    return this.http.get<Project[]>(this.projectUrl);
+  getAll(): Observable<Project[]> {
+    return this.http.get<Project[]>(this.endPoint);
   }
 
-  getProject(projectId: number): Observable<Project> {
-    let endPointUrl = this.projectUrl+ "/" + projectId;
-    return this.http.get<Project>(endPointUrl);
+  getOne(projectId: number): Observable<Project> {
+    let endPoint = this.endPoint + "/" + projectId;
+    return this.http.get<Project>(endPoint);
   }
 
   save(project: Project): Observable<Project> {
-    log("project " + project.name + " saved");
-    return this.http.post<Project>(this.projectUrl, project);
+    return this.http.post<Project>(this.endPoint, project);
   }
 
   remove(project: Project): Observable<Project> {
-  let endPointUrl = this.projectUrl+ "/" + project.id;
-    log("project " + project.name + " removing");
-    return this.http.delete<Project>(endPointUrl, httpOptions);
+    let endPoint = this.endPoint + "/" + project.id;
+    return this.http.delete<Project>(endPoint, httpOptions);
   }
 }

@@ -2,7 +2,7 @@
   <h2>polar task</h2>
   <div>
     <h4>stand point</h4>
-    <div >
+    <div *ngIf="standPoint" >
       <label class="mr-2">number
         <input [(ngModel)]="standPoint.number" placeholder="stand point number"/>
       </label>

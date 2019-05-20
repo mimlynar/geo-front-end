@@ -22,14 +22,13 @@ export class PolarTaskComponent implements OnInit {
   task: PolarTask;
   taskId: number;
   projectId: number;
-  standPoint: Point = new Point();
+  standPoint: Point;
   observations: PolarObservation[] = [];
 
   ngOnInit() {
     this.getCurrentProjectId();
     this.getCurrentTaskId();
     this.loadPolarTaskAndObservations();
-    this.resolveStandPoint();
   }
 
   save(): void {
@@ -48,7 +47,6 @@ export class PolarTaskComponent implements OnInit {
   }
 
   resolveTask(): void {
-    this.assignStandPoint();
     this.polarService.resolve(this.task.observations)
       .subscribe(observations => this.task.observations = observations);
   }
@@ -61,36 +59,23 @@ export class PolarTaskComponent implements OnInit {
     this.polarService.getOne(this.taskId)
       .subscribe(task => {
         this.task = task;
-        this.observations = task.observations
+        this.observations = task.observations;
+        this.resolveStandPoint(task);
       });
+  }
+
+  private resolveStandPoint(task) {
+    this.standPoint = task.observations.length > 0 ? task.observations[0].stand : new Point();
   }
 
   private getCurrentTaskId() {
     this.route.params.subscribe(params => this.taskId = params['taskId']);
   }
 
-  private isValueUndefined(value: any): boolean {
-    return typeof value === 'undefined' || value === null
-  }
-
   private createNewEntry(): PolarObservation {
     let observation: PolarObservation = new PolarObservation();
     observation.target = new Point();
     return observation;
-  }
-
-  private assignStandPoint(): void {
-    this.observations.forEach(observation => observation.stand = this.standPoint);
-  }
-
-  private resolveStandPoint() {
-    let firstObservation = this.observations[0];
-    if (firstObservation) {
-
-      if (!this.isValueUndefined(firstObservation.stand)) {
-        this.standPoint = firstObservation.stand;
-      }
-    }
   }
 
   private getCurrentProjectId() {

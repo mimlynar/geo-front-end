@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {PolarTask} from "../polarTask";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PolarService} from "../polar.service";
+import {Point} from "../point";
 
 @Component({
   selector: 'app-new-task',
@@ -25,10 +26,17 @@ export class PolarTaskCreationComponent implements OnInit {
   }
 
   create(): void {
-    this.task.projectId = this.projectId;
-    this.task.observations = [];
+    this.prepareNewPolarTask();
     this.taskService.save(this.task)
       .subscribe(task =>this.redirectToTaskView(task));
+  }
+
+  private prepareNewPolarTask() {
+    this.task.projectId = this.projectId;
+    this.task.observations = [];
+    let standPoint = new Point();
+    this.task.stand = standPoint;
+    this.task.observations.forEach(o=>o.target=standPoint);
   }
 
   redirectToProject() {

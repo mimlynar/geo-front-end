@@ -35,7 +35,6 @@ export class PolarTaskCreationComponent implements OnInit {
     this.task.projectId = this.projectId;
     this.task.observations = [];
     let standPoint = new Point();
-    this.task.stand = standPoint;
     this.task.observations.forEach(o=>o.target=standPoint);
   }
 

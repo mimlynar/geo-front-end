@@ -32,7 +32,8 @@ export class PolarTaskComponent implements OnInit {
   }
 
   save(): void {
-    this.polarService.save(this.task);
+    this.assignStandPoint();
+    this.polarService.save(this.task).subscribe(success=>this.loadPolarTaskAndObservations());
   }
 
   addEmptyRows(): void {
@@ -80,5 +81,9 @@ export class PolarTaskComponent implements OnInit {
 
   private getCurrentProjectId() {
     this.route.params.subscribe(params => this.projectId = params['projectId']);
+  }
+
+  private assignStandPoint() {
+    this.task.observations.forEach(o => o.stand = this.standPoint);
   }
 }

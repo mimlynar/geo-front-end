@@ -3,6 +3,7 @@ import {PolarObservation} from "./polarObservation";
 
 export const POLAR_OBSERVATIONS: PolarObservation[] = [
   {
+    id:1,
     target: {
       id: undefined,
       number: 'someTarget',
@@ -15,6 +16,7 @@ export const POLAR_OBSERVATIONS: PolarObservation[] = [
     reference: true
   },
   {
+    id:2,
     target: {
       id: undefined,
       number: 'someTarget',

@@ -33,11 +33,12 @@ export class PolarTaskComponent implements OnInit {
 
   save(): void {
     this.assignStandPoint();
+    this.task.observations = this.observations;
     this.polarService.save(this.task).subscribe(success=>this.loadPolarTaskAndObservations());
   }
 
   addEmptyRows(): void {
-    this.task.observations.push(this.createNewEntry());
+    this.observations.push(this.createNewEntry());
   }
 
   delete(observation: PolarObservation) {
@@ -48,8 +49,9 @@ export class PolarTaskComponent implements OnInit {
   }
 
   resolveTask(): void {
-    this.polarService.resolve(this.task.observations)
-      .subscribe(observations => this.task.observations = observations);
+    this.assignStandPoint();
+    this.polarService.resolve(this.observations)
+      .subscribe(observations => this.observations=observations);
   }
 
   redirectToProject() {
@@ -84,6 +86,6 @@ export class PolarTaskComponent implements OnInit {
   }
 
   private assignStandPoint() {
-    this.task.observations.forEach(o => o.stand = this.standPoint);
+    this.observations.forEach(o => o.stand = this.standPoint);
   }
 }

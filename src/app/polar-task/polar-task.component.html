@@ -42,16 +42,18 @@
           <input [(ngModel)]="observation.target.number"/>
         </td>
         <td>
-          <input [(ngModel)]="observation.direction"/>
+          <input [ngModel]="observation.direction | number:'1.4-4'" (ngModelChange)="observation.direction=$event"/>
         </td>
         <td>
-          <input [(ngModel)]="observation.distance"/>
+          <input [ngModel]="observation.distance | number:'1.2-2'" (ngModelChange)="observation.distance=$event"/>
         </td>
         <td>
-          <input [(ngModel)]="observation.target.x" readonly/>
+          <input [ngModel]="observation.target.x | number:'1.2-2'" (ngModelChange)="observation.target.x=$event"
+                 [readonly]="!observation.reference"/>
         </td>
         <td>
-          <input [(ngModel)]="observation.target.y" readonly/>
+          <input [ngModel]="observation.target.y | number:'1.2-2'" (ngModelChange)="observation.target.y=$event"
+                 [readonly]="!observation.reference"/>
         </td>
         <td>
           <button (click)="delete(observation)" type="button" class="btn btn-danger btn-sm">x</button>

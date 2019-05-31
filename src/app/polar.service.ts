@@ -36,8 +36,8 @@ export class PolarService {
   }
 
   resolve(observations: PolarObservation[]): Observable<PolarObservation[]> {
-    console.log("task resolved");
-    return of([]);
+    let endPoint = this.taskUrl + "/resolve" ;
+    return this.http.post<PolarObservation[]>(endPoint, observations);
   }
 
 }

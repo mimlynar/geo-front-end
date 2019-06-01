@@ -68,7 +68,13 @@ export class PolarTaskComponent implements OnInit {
   }
 
   private resolveStandPoint(task) {
-    this.standPoint = task.observations.length > 0 ? task.observations[0].stand : new Point();
+    this.standPoint = task.observations.length > 0 ? task.observations[0].stand : this.createNewPoint();
+  }
+
+  private createNewPoint() : Point{
+    var point = new Point();
+    point.projectId = this.projectId;
+    return point;
   }
 
   private getCurrentTaskId() {
@@ -77,7 +83,7 @@ export class PolarTaskComponent implements OnInit {
 
   private createNewEntry(): PolarObservation {
     let observation: PolarObservation = new PolarObservation();
-    observation.target = new Point();
+    observation.target = this.createNewPoint();
     return observation;
   }
 

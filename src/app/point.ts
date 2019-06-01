@@ -4,5 +4,5 @@ export class Point {
   number: string;
   x: number;
   y: number;
-
+  projectId: number;
 }

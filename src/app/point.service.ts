@@ -1,28 +1,34 @@
 import {Injectable} from '@angular/core';
 import {Point} from "./point";
-import {log} from "util";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {PolarTask} from "./polarTask";
+
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class PointService {
 
-  private endPoint = 'http://localhost:9999/points';
+  private endPoint = 'http://localhost:9999/points/';
 
   constructor(
     private http: HttpClient
   ) {
   }
 
-  delete(point: Point) {
-    log("point deleted");
+  delete(pointId: number): Observable<Point> {
+    let endPoint = this.endPoint + "/" + pointId;
+    return this.http.delete(endPoint, httpOptions);
   }
 
   getPointsForProject(projectId: number): Observable<Point[]> {
-    let endPoint = this.endPoint + "/" + projectId;
+    let endPoint = this.endPoint + "/project/" + projectId;
     return this.http.get<Point[]>(endPoint);
   }
 }

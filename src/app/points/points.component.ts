@@ -3,6 +3,7 @@ import {Point} from "../point";
 import {PointService} from "../point.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ProjectService} from "../project.service";
+import {Project} from "../project";
 
 @Component({
   selector: 'app-points',
@@ -13,6 +14,7 @@ export class PointsComponent implements OnInit {
 
   points: Point[] = [];
   projectId: number;
+  project: Project;
 
   constructor(
     private pointService: PointService,
@@ -25,6 +27,7 @@ export class PointsComponent implements OnInit {
   ngOnInit() {
     this.loadCurrentProjectId();
     this.loadProjectPoints();
+    this.loadCurrentProject();
   }
 
 
@@ -33,7 +36,11 @@ export class PointsComponent implements OnInit {
   }
 
   delete(point: Point) {
-    this.pointService.delete(point);
+    this.pointService.delete(point.id)
+      .subscribe(() => this.removeTaskFromList(point));
+  }
+
+  removeTaskFromList(point: Point) {
     let index: number = this.points.indexOf(point);
     if (index !== -1) {
       this.points.splice(index, 1);
@@ -54,6 +61,9 @@ export class PointsComponent implements OnInit {
     this.route.params.subscribe(params => this.projectId = params['projectId']);
   }
 
+  private loadCurrentProject() {
+    this.projectService.getOne(this.projectId).subscribe(project => this.project = project);
+  }
 }
 
 

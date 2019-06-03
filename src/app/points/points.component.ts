@@ -56,7 +56,6 @@ export class PointsComponent implements OnInit {
     this.router.navigate(["projects", this.projectId]);
   }
 
-
   private loadCurrentProjectId() {
     this.route.params.subscribe(params => this.projectId = params['projectId']);
   }

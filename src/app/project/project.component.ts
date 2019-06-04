@@ -4,6 +4,9 @@ import {ProjectService} from "../project.service";
 import {Project} from "../project";
 import {PolarTask} from "../polarTask";
 import {PolarService} from "../polar.service";
+import {MatDialog} from '@angular/material/dialog';
+import {PolarTaskCreationComponent} from "../polar-task-creation/polar-task-creation.component";
+
 
 @Component({
   selector: 'app-project',
@@ -19,12 +22,26 @@ export class ProjectComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private projectService: ProjectService,
-    private polarService: PolarService) {
+    private polarService: PolarService,
+    public dialog: MatDialog) {
   }
 
   ngOnInit() {
     this.getCurrentProjectId();
     this.loadCurrentProjectAndTasks();
+  }
+
+  openDialog(): void {
+    var dialogRef = this.dialog.open(PolarTaskCreationComponent, {
+        width: '550px',
+        height: '350px',
+        data: {
+          projectId: this.projectId,
+          projectName: this.project.name
+        }
+      })
+    ;
+    dialogRef.afterClosed().subscribe(success => this.loadCurrentProjectAndTasks())
   }
 
   delete(task: PolarTask) {
@@ -51,3 +68,4 @@ export class ProjectComponent implements OnInit {
   }
 
 }
+

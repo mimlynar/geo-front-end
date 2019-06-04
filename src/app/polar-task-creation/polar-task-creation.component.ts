@@ -1,52 +1,46 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {PolarTask} from "../polarTask";
-import {ActivatedRoute, Router} from "@angular/router";
 import {PolarService} from "../polar.service";
 import {Point} from "../point";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+
+export interface DialogData {
+  projectId: number;
+  projectName: string;
+}
 
 @Component({
   selector: 'app-new-task',
   templateUrl: './polar-task-creation.component.html',
   styleUrls: ['./polar-task-creation.component.css']
 })
-export class PolarTaskCreationComponent implements OnInit {
+export class PolarTaskCreationComponent {
 
   task: PolarTask = new PolarTask();
-  projectId: number;
 
   constructor(
-    private router: Router,
     private taskService: PolarService,
-    private route: ActivatedRoute,
-  ) {
+    private dialogRef: MatDialogRef<PolarTaskCreationComponent>,
+    @Inject(MAT_DIALOG_DATA) private data: DialogData) {
   }
 
-  ngOnInit() {
-    this.getCurrentProjectId();
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
   create(): void {
     this.prepareNewPolarTask();
     this.taskService.save(this.task)
-      .subscribe(task =>this.redirectToTaskView(task));
+      .subscribe(task => {
+        this.onNoClick()
+      });
   }
 
   private prepareNewPolarTask() {
-    this.task.projectId = this.projectId;
+    this.task.projectId = this.data.projectId;
     this.task.observations = [];
     let standPoint = new Point();
     this.task.observations.forEach(o=>o.target=standPoint);
   }
 
-  redirectToProject() {
-    this.router.navigate(["projects", this.projectId]);
-  }
-
-  private redirectToTaskView(task) {
-     this.router.navigate(["projects", this.projectId, "task", task.id]);
-  }
-
-  private getCurrentProjectId() {
-    this.route.params.subscribe(params => this.projectId = params['projectId']);
-  }
 }

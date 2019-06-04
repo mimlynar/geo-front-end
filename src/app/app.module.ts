@@ -10,6 +10,7 @@ import {ProjectCreationComponent} from './project-creation/project-creation.comp
 import {PolarTaskCreationComponent} from './polar-task-creation/polar-task-creation.component';
 import {PointsComponent} from './points/points.component';
 import {HttpClientModule} from '@angular/common/http';
+import {CustomMaterialModule} from "./custom-material/custom-material.module";
 
 
 @NgModule({
@@ -27,8 +28,10 @@ import {HttpClientModule} from '@angular/common/http';
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
+    CustomMaterialModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [PolarTaskCreationComponent]
 })
 export class AppModule { }

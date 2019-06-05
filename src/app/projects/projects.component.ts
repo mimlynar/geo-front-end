@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ProjectService} from "../project.service";
 import {Project} from "../project";
+import {MatDialog} from "@angular/material/dialog";
+import {ProjectCreationComponent} from "../project-creation/project-creation.component";
 
 @Component({
   selector: 'app-projects',
@@ -13,11 +15,22 @@ export class ProjectsComponent implements OnInit {
 
   constructor(
     private projectService: ProjectService,
+    public dialog: MatDialog
   ) {
   }
 
   ngOnInit() {
     this.loadProjects();
+  }
+
+
+  openDialog(): void {
+    var dialogRef = this.dialog.open(ProjectCreationComponent, {
+        width: '550px',
+        height: '350px'
+      })
+    ;
+    dialogRef.afterClosed().subscribe(success => this.loadProjects())
   }
 
   delete(project: Project) {

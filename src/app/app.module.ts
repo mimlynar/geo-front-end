@@ -32,6 +32,6 @@ import {CustomMaterialModule} from "./custom-material/custom-material.module";
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [PolarTaskCreationComponent]
+  entryComponents: [PolarTaskCreationComponent, ProjectCreationComponent]
 })
 export class AppModule { }

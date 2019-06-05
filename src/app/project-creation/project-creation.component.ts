@@ -1,33 +1,30 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Project} from "../project";
 import {ProjectService} from "../project.service";
-import {Router} from "@angular/router";
+import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-new-project',
   templateUrl: './project-creation.component.html',
   styleUrls: ['./project-creation.component.css']
 })
-export class ProjectCreationComponent implements OnInit {
+export class ProjectCreationComponent {
 
   project: Project = new Project();
 
   constructor(
     private projectService: ProjectService,
-    private router: Router,
+    private dialogRef: MatDialogRef<ProjectCreationComponent>,
   ) {
-  }
-
-  ngOnInit() {
   }
 
   createProject(): void {
     this.projectService.save(this.project)
-      .subscribe(success => this.redirectToProjects());
+      .subscribe(success => this.onNoClick());
   }
 
-  private redirectToProjects() {
-    this.router.navigate(["projects"]);
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

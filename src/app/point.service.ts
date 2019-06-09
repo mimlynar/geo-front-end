@@ -22,6 +22,10 @@ export class PointService {
   ) {
   }
 
+  save(points: Point[]): Observable<Point[]> {
+    return this.http.post<Point[]>(this.endPoint, points);
+  }
+
   delete(pointId: number): Observable<Point> {
     let endPoint = this.endPoint + pointId;
     return this.http.delete<Point>(endPoint, httpOptions);

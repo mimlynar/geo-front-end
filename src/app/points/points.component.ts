@@ -49,6 +49,7 @@ export class PointsComponent implements OnInit {
 
   createNewEntry() {
     let point: Point = new Point();
+    point.projectId = this.projectId;
     this.points.push(point);
   }
 
@@ -62,6 +63,10 @@ export class PointsComponent implements OnInit {
 
   private loadCurrentProject() {
     this.projectService.getOne(this.projectId).subscribe(project => this.project = project);
+  }
+
+  save(): void {
+    this.pointService.save(this.points).subscribe(points=>this.points = points);
   }
 }
 

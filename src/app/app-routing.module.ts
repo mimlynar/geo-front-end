@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from "@angular/router";
-import {ProjectsComponent} from "./projects/projects.component";
-import {PolarTaskComponent} from "./polar-task/polar-task.component";
-import {ProjectComponent} from "./project/project.component";
-import {PointsComponent} from "./points/points.component";
+import {ProjectsComponent} from "./components/projects/projects.component";
+import {PolarTaskComponent} from "./components/polar-task/polar-task.component";
+import {ProjectComponent} from "./components/project/project.component";
+import {PointsComponent} from "./components/points/points.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/projects', pathMatch: 'full'},

@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {Point} from "../point";
-import {PointService} from "../point.service";
+import {Point} from "../../point";
+import {PointService} from "../../point.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {ProjectService} from "../project.service";
-import {Project} from "../project";
+import {ProjectService} from "../../project.service";
+import {Project} from "../../project";
 
 @Component({
   selector: 'app-points',

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {Project} from "../project";
-import {ProjectService} from "../project.service";
+import {Project} from "../../project";
+import {ProjectService} from "../../project.service";
 import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({

@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {Point} from "../point";
-import {PolarObservation} from "../polarObservation";
-import {PolarService} from "../polar.service";
+import {Point} from "../../point";
+import {PolarObservation} from "../../polarObservation";
+import {PolarService} from "../../polar.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {PolarTask} from "../polarTask";
+import {PolarTask} from "../../polarTask";
 import {Observable, Subject} from "rxjs";
 import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
-import {PointService} from "../point.service";
+import {PointService} from "../../point.service";
 
 @Component({
   selector: 'app-polar-task',

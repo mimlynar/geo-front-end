@@ -4,7 +4,21 @@
     <h4>stand point</h4>
     <div *ngIf="standPoint" >
       <label class="mr-2">number
-        <input [(ngModel)]="standPoint.number" placeholder="stand point number"/>
+        <input #searchBox
+               [(ngModel)]="standPoint.number"
+               placeholder="stand point number"
+               (input)="searchPointsByName(searchBox.value)"
+               [matAutocomplete]="auto"/>
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let point of promptedPoints$ | async" (click)="selectStandPoint(point)">
+            <b> {{point.number }}</b>
+          </mat-option>
+          <mat-option *ngIf="standPoint.number"
+                      value={{standPoint.number}}
+                      (click)=selectStandPoint(createNewPointWithName(standPoint.number))>
+            <i>{{standPoint.number}}</i>
+          </mat-option>
+        </mat-autocomplete>
       </label>
       <label class="mr-2">x
         <input [(ngModel)]="standPoint.x" placeholder="x"/>

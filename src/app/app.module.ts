@@ -2,7 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {PolarTaskComponent} from './polar-task/polar-task.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ProjectsComponent} from './projects/projects.component';
 import {ProjectComponent} from './project/project.component';
 import {AppRoutingModule} from './app-routing.module';
@@ -11,6 +11,7 @@ import {PolarTaskCreationComponent} from './polar-task-creation/polar-task-creat
 import {PointsComponent} from './points/points.component';
 import {HttpClientModule} from '@angular/common/http';
 import {CustomMaterialModule} from "./custom-material/custom-material.module";
+import {MatAutocompleteModule} from "@angular/material";
 
 
 @NgModule({
@@ -28,7 +29,9 @@ import {CustomMaterialModule} from "./custom-material/custom-material.module";
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    CustomMaterialModule
+    CustomMaterialModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule
   ],
   providers: [],
   bootstrap: [AppComponent],

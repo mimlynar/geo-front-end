@@ -4,6 +4,9 @@ import {PolarObservation} from "../polarObservation";
 import {PolarService} from "../polar.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PolarTask} from "../polarTask";
+import {Observable, Subject} from "rxjs";
+import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
+import {PointService} from "../point.service";
 
 @Component({
   selector: 'app-polar-task',
@@ -15,7 +18,8 @@ export class PolarTaskComponent implements OnInit {
   constructor(
     private polarService: PolarService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private pointService: PointService
   ) {
   }
 
@@ -24,11 +28,27 @@ export class PolarTaskComponent implements OnInit {
   projectId: number;
   standPoint: Point;
   observations: PolarObservation[] = [];
+  promptedPoints$: Observable<Point[]>;
+  private searchTerms = new Subject<string>();
+
+  selectStandPoint(point: Point) {
+    this.standPoint = point;
+  }
 
   ngOnInit() {
     this.getCurrentProjectId();
     this.getCurrentTaskId();
     this.loadPolarTaskAndObservations();
+    this.promptedPoints$ = this.searchTerms.pipe(
+
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((pointNumber: string) => this.pointService.getPointsPyNameAndProject(pointNumber, this.projectId)));
+
+  }
+
+  searchPointsByName(term: string): void {
+    this.searchTerms.next(term);
   }
 
   save(): void {
@@ -74,6 +94,12 @@ export class PolarTaskComponent implements OnInit {
   private createNewPoint() : Point{
     var point = new Point();
     point.projectId = this.projectId;
+    return point;
+  }
+
+   createNewPointWithName(pointNumber: string): Point {
+    const point = this.createNewPoint();
+    point.number = pointNumber;
     return point;
   }
 

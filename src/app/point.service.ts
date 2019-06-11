@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Point} from "./point";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
 
 
 const httpOptions = {
@@ -34,5 +34,19 @@ export class PointService {
   getPointsForProject(projectId: number): Observable<Point[]> {
     let endPoint = this.endPoint + "project/" + projectId;
     return this.http.get<Point[]>(endPoint);
+  }
+
+  getPointsPyNameAndProject(pointName: string, projectId: number): Observable<Point[]> {
+    if (!pointName.trim()) {
+      return of([]);
+    }
+    let endPoint = this.endPoint + pointName + "/" + projectId;
+    return this.http.get<Point[]>(endPoint)
+      .pipe(source => source);
+  }
+
+  resolvePoint(pointNumber: string, projectId: number): Observable<Point> {
+    let endPoint = this.endPoint + "project/" + projectId + "/" + pointNumber;
+    return this.http.get<Point>(endPoint);
   }
 }

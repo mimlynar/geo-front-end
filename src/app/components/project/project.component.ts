@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {Project} from "../project";
 import {PolarTask} from "../../polarTask";
-import {PolarService} from "../../polar.service";
+import {PolarService} from "../../services/polar.service";
 import {MatDialog} from '@angular/material/dialog';
 import {PolarTaskCreationComponent} from "../polar-task-creation/polar-task-creation.component";
-import {ProjectService} from "../../project.service";
+import {ProjectService} from "../../services/project.service";
+import {Project} from "../../project";
 
 
 @Component({

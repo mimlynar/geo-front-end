@@ -1,6 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {PolarTask} from "../../polarTask";
-import {PolarService} from "../../polar.service";
+import {PolarService} from "../../services/polar.service";
 import {Point} from "../../point";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Point} from "./point";
+import {Point} from "../point";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable, of} from "rxjs";
 

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ProjectService} from "../../project.service";
+import {ProjectService} from "../../services/project.service";
 import {Project} from "../../project";
 import {MatDialog} from "@angular/material/dialog";
 import {ProjectCreationComponent} from "../project-creation/project-creation.component";

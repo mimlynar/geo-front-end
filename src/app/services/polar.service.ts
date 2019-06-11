@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {PolarObservation} from "./polarObservation";
+import {PolarObservation} from "../polarObservation";
 import {Observable, of} from "rxjs";
-import {PolarTask} from "./polarTask";
+import {PolarTask} from "../polarTask";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 const httpOptions = {

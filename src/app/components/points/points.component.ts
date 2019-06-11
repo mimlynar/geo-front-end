@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Point} from "../../point";
-import {PointService} from "../../point.service";
+import {PointService} from "../../services/point.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {ProjectService} from "../../project.service";
+import {ProjectService} from "../../services/project.service";
 import {Project} from "../../project";
 
 @Component({

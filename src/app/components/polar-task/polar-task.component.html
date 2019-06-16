@@ -56,17 +56,17 @@
           <input [(ngModel)]="observation.target.number"/>
         </td>
         <td>
-          <input [ngModel]="observation.direction | number:'1.4-4'" (ngModelChange)="observation.direction=$event"/>
+          <input [ngModel]="observation.direction " (ngModelChange)="observation.direction=$event"/>
         </td>
         <td>
-          <input [ngModel]="observation.distance | number:'1.2-2'" (ngModelChange)="observation.distance=$event"/>
+          <input [ngModel]="observation.distance " (ngModelChange)="observation.distance=$event"/>
         </td>
         <td>
-          <input [ngModel]="observation.target.x | number:'1.2-2'" (ngModelChange)="observation.target.x=$event"
+          <input [ngModel]="observation.target.x" (ngModelChange)="observation.target.x=$event"
                  [readonly]="!observation.reference"/>
         </td>
         <td>
-          <input [ngModel]="observation.target.y | number:'1.2-2'" (ngModelChange)="observation.target.y=$event"
+          <input [ngModel]="observation.target.y" (ngModelChange)="observation.target.y=$event"
                  [readonly]="!observation.reference"/>
         </td>
         <td>

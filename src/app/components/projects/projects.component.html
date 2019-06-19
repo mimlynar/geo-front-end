@@ -10,9 +10,9 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let project of projects; let i = index">
+    <tr *ngFor="let project of projects; let i = index" id="projectEntry">
       <td>{{i}}</td>
-      <td>
+      <td id='projectName'>
         <a [routerLink]="[project.id]">
           {{project.name}}
         </a>

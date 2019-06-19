@@ -24,7 +24,7 @@ export class PolarTaskCreationComponent {
     @Inject(MAT_DIALOG_DATA) private data: DialogData) {
   }
 
-  onNoClick(): void {
+  closeModal(): void {
     this.dialogRef.close();
   }
 
@@ -32,7 +32,7 @@ export class PolarTaskCreationComponent {
     this.prepareNewPolarTask();
     this.taskService.save(this.task)
       .subscribe(task => {
-        this.onNoClick()
+        this.closeModal()
       });
   }
 

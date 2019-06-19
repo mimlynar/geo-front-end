@@ -32,7 +32,7 @@ export class ProjectComponent implements OnInit {
   }
 
   openDialog(): void {
-    var dialogRef = this.dialog.open(PolarTaskCreationComponent, {
+    const dialogRef = this.dialog.open(PolarTaskCreationComponent, {
         width: '550px',
         height: '350px',
         data: {
@@ -41,7 +41,8 @@ export class ProjectComponent implements OnInit {
         }
       })
     ;
-    dialogRef.afterClosed().subscribe(success => this.loadCurrentProjectAndTasks())
+    dialogRef.afterClosed()
+      .subscribe(success => this.loadCurrentProjectAndTasks())
   }
 
   delete(task: PolarTask) {
@@ -50,14 +51,16 @@ export class ProjectComponent implements OnInit {
   }
 
   private loadCurrentProjectAndTasks() {
-    this.projectService.getOne(this.projectId).subscribe(project => {
+    this.projectService.getOne(this.projectId)
+      .subscribe(project => {
       this.project = project;
       this.polarTasks = project.polarTasks;
     });
   }
 
   private getCurrentProjectId(): void {
-    this.route.params.subscribe(parameters => this.projectId = parameters['projectId']);
+    this.route.params
+      .subscribe(parameters => this.projectId = parameters['projectId']);
   }
 
   private removeTaskFromList(task: PolarTask) {

@@ -32,7 +32,8 @@ export class PointsComponent implements OnInit {
 
 
   private loadProjectPoints() {
-    this.pointService.getPointsForProject(this.projectId).subscribe(points => this.points = points);
+    this.pointService.getPointsForProject(this.projectId)
+      .subscribe(points => this.points = points);
   }
 
   delete(point: Point) {
@@ -58,15 +59,18 @@ export class PointsComponent implements OnInit {
   }
 
   private loadCurrentProjectId() {
-    this.route.params.subscribe(params => this.projectId = params['projectId']);
+    this.route.params
+      .subscribe(params => this.projectId = params['projectId']);
   }
 
   private loadCurrentProject() {
-    this.projectService.getOne(this.projectId).subscribe(project => this.project = project);
+    this.projectService.getOne(this.projectId)
+      .subscribe(project => this.project = project);
   }
 
   save(): void {
-    this.pointService.save(this.points).subscribe(points=>this.points = points);
+    this.pointService.save(this.points)
+      .subscribe(points=>this.points = points);
   }
 }
 

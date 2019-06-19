@@ -25,12 +25,13 @@ export class ProjectsComponent implements OnInit {
 
 
   openDialog(): void {
-    var dialogRef = this.dialog.open(ProjectCreationComponent, {
+    const dialogRef = this.dialog.open(ProjectCreationComponent, {
         width: '550px',
         height: '350px'
       })
     ;
-    dialogRef.afterClosed().subscribe(success => this.loadProjects())
+    dialogRef.afterClosed()
+      .subscribe(success => this.loadProjects())
   }
 
   delete(project: Project) {

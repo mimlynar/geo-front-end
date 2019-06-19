@@ -10,7 +10,7 @@
                (input)="searchPointsByName(searchBox.value)"
                [matAutocomplete]="auto"/>
         <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let point of promptedPoints$ | async" (click)="selectStandPoint(point)">
+          <mat-option *ngFor="let point of resolvedStandPoints$ | async" (click)="selectStandPoint(point)">
             <b> {{point.number }}</b>
           </mat-option>
           <mat-option *ngIf="standPoint.number"

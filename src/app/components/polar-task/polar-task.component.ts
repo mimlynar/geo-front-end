@@ -28,7 +28,7 @@ export class PolarTaskComponent implements OnInit {
   projectId: number;
   standPoint: Point;
   observations: PolarObservation[] = [];
-  promptedPoints$: Observable<Point[]>;
+  resolvedStandPoints$: Observable<Point[]>;
   private searchTerms = new Subject<string>();
 
   selectStandPoint(point: Point) {
@@ -36,15 +36,17 @@ export class PolarTaskComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getCurrentProjectId();
-    this.getCurrentTaskId();
+    this.loadCurrentProjectId();
+    this.loadCurrentTaskId();
     this.loadPolarTaskAndObservations();
-    this.promptedPoints$ = this.searchTerms.pipe(
+    this.resolvedStandPoints$ = this.registerStandPointAutocomplete();
+  }
 
+  private registerStandPointAutocomplete() {
+    return this.searchTerms.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap((pointNumber: string) => this.pointService.getPointsPyNameAndProject(pointNumber, this.projectId)));
-
+      switchMap((pointNumber: string) => this.pointService.getPointsByNameAndProject(pointNumber, this.projectId)));
   }
 
   searchPointsByName(term: string): void {
@@ -92,7 +94,7 @@ export class PolarTaskComponent implements OnInit {
   }
 
   private createNewPoint() : Point{
-    var point = new Point();
+    const point = new Point();
     point.projectId = this.projectId;
     return point;
   }
@@ -103,18 +105,19 @@ export class PolarTaskComponent implements OnInit {
     return point;
   }
 
-  private getCurrentTaskId() {
+  private loadCurrentTaskId() {
     this.route.params.subscribe(params => this.taskId = params['taskId']);
   }
 
   private createNewEntry(): PolarObservation {
-    let observation: PolarObservation = new PolarObservation();
+    const observation: PolarObservation = new PolarObservation();
     observation.target = this.createNewPoint();
     return observation;
   }
 
-  private getCurrentProjectId() {
-    this.route.params.subscribe(params => this.projectId = params['projectId']);
+  private loadCurrentProjectId() {
+    this.route.params
+      .subscribe(params => this.projectId = params['projectId']);
   }
 
   private assignStandPoint() {

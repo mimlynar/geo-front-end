@@ -36,17 +36,14 @@ export class PointService {
     return this.http.get<Point[]>(endPoint);
   }
 
-  getPointsPyNameAndProject(pointName: string, projectId: number): Observable<Point[]> {
+  getPointsByNameAndProject(pointName: string, projectId: number): Observable<Point[]> {
     if (!pointName.trim()) {
       return of([]);
     }
+
     let endPoint = this.endPoint + pointName + "/" + projectId;
     return this.http.get<Point[]>(endPoint)
       .pipe(source => source);
   }
 
-  resolvePoint(pointNumber: string, projectId: number): Observable<Point> {
-    let endPoint = this.endPoint + "project/" + projectId + "/" + pointNumber;
-    return this.http.get<Point>(endPoint);
-  }
 }

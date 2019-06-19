@@ -20,10 +20,10 @@ export class ProjectCreationComponent {
 
   createProject(): void {
     this.projectService.save(this.project)
-      .subscribe(success => this.onNoClick());
+      .subscribe(success => this.closeDialog());
   }
 
-  onNoClick(): void {
+  closeDialog(): void {
     this.dialogRef.close();
   }
 

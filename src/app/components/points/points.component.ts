@@ -37,7 +37,7 @@ export class PointsComponent implements OnInit {
   }
 
   delete(point: Point) {
-    this.pointService.delete(point.id)
+    this.pointService.delete(point)
       .subscribe(() => this.removeTaskFromList(point));
   }
 

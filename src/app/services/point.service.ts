@@ -26,9 +26,13 @@ export class PointService {
     return this.http.post<Point[]>(this.endPoint, points);
   }
 
-  delete(pointId: number): Observable<Point> {
-    let endPoint = this.endPoint + pointId;
-    return this.http.delete<Point>(endPoint, httpOptions);
+  delete(point: Point): Observable<Point> {
+    let pointId = point.id;
+    if(pointId){
+      let endPoint = this.endPoint + pointId;
+      return this.http.delete<Point>(endPoint, httpOptions);
+    }
+    return of(point);
   }
 
   getPointsForProject(projectId: number): Observable<Point[]> {

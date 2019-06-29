@@ -9,9 +9,11 @@ import {AppRoutingModule} from './app-routing.module';
 import {ProjectCreationComponent} from '../components/project-creation/project-creation.component';
 import {PolarTaskCreationComponent} from '../components/polar-task-creation/polar-task-creation.component';
 import {PointsComponent} from '../components/points/points.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {CustomMaterialModule} from "./custom-material.module";
 import {MatAutocompleteModule} from "@angular/material";
+import {MessageComponent} from '../components/message/message.component';
+import {HttpErrorInterceptor} from "../services/errorHandler";
 
 
 @NgModule({
@@ -22,7 +24,8 @@ import {MatAutocompleteModule} from "@angular/material";
     ProjectComponent,
     ProjectCreationComponent,
     PolarTaskCreationComponent,
-    PointsComponent
+    PointsComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,13 @@ import {MatAutocompleteModule} from "@angular/material";
     ReactiveFormsModule,
     MatAutocompleteModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent],
   entryComponents: [PolarTaskCreationComponent, ProjectCreationComponent]
 })

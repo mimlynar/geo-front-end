@@ -56,7 +56,7 @@ export class PolarTaskComponent implements OnInit {
   save(): void {
     this.assignStandPoint();
     this.task.observations = this.observations;
-    this.polarService.save(this.task).subscribe(success=>this.loadPolarTaskAndObservations());
+    this.polarService.save(this.task).subscribe(success => this.loadPolarTaskAndObservations());
   }
 
   addEmptyRows(): void {
@@ -73,7 +73,9 @@ export class PolarTaskComponent implements OnInit {
   resolveTask(): void {
     this.assignStandPoint();
     this.polarService.resolve(this.observations)
-      .subscribe(observations => this.observations=observations);
+      .subscribe(
+        observations => this.observations = observations
+      );
   }
 
   redirectToProject() {
@@ -93,15 +95,15 @@ export class PolarTaskComponent implements OnInit {
     this.standPoint = task.observations.length > 0 ? task.observations[0].stand : this.createNewPoint();
   }
 
-  private createNewPoint() : Point{
-    const point = new Point();
-    point.projectId = this.projectId;
+  createNewPointWithName(pointNumber: string): Point {
+    const point = this.createNewPoint();
+    point.number = pointNumber;
     return point;
   }
 
-   createNewPointWithName(pointNumber: string): Point {
-    const point = this.createNewPoint();
-    point.number = pointNumber;
+  private createNewPoint(): Point {
+    const point = new Point();
+    point.projectId = this.projectId;
     return point;
   }
 
@@ -123,4 +125,5 @@ export class PolarTaskComponent implements OnInit {
   private assignStandPoint() {
     this.observations.forEach(o => o.stand = this.standPoint);
   }
+
 }

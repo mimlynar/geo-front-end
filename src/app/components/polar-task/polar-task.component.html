@@ -5,6 +5,7 @@
     <div *ngIf="standPoint" >
       <label class="mr-2">number
         <input #searchBox
+               class="form-control"
                [(ngModel)]="standPoint.number"
                placeholder="stand point number"
                (input)="searchPointsByName(searchBox.value)"
@@ -21,10 +22,11 @@
         </mat-autocomplete>
       </label>
       <label class="mr-2">x
-        <input [(ngModel)]="standPoint.x" placeholder="x"/>
+        <input
+          [(ngModel)]="standPoint.x" placeholder="x" class="form-control"/>
       </label>
       <label class="mr-2">y
-        <input [(ngModel)]="standPoint.y" placeholder="y"/>
+        <input [(ngModel)]="standPoint.y" placeholder="y"  class="form-control"/>
       </label>
     </div>
   </div>

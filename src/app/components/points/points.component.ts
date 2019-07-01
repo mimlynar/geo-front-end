@@ -6,7 +6,7 @@ import {ProjectService} from "../../services/project.service";
 import {Project} from "../../project";
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 
-const POINT_VALIDATOR = Validators.pattern("^([-]?)+[0-9]+([.]?[0-9]+)$");
+const POINT_VALIDATOR = Validators.pattern("^([-]?)+[0-9]+([.]?[0-9]+)?$");
 
 @Component({
   selector: 'app-points',
@@ -44,7 +44,7 @@ export class PointsComponent implements OnInit {
 
   save() {
     let points: Point[] = this.getFormData.controls.map(control => this.mapData(control));
-    this.pointService.save(points).subscribe();
+    this.pointService.save(points).subscribe(success=>this.ngOnInit());
   }
 
   addNewPoint() {
@@ -103,7 +103,8 @@ export class PointsComponent implements OnInit {
       });
   }
 
-  goToProject() {
+  saveAndClose() {
+    this.save();
     this.router.navigate(["projects", this.projectId]);
   }
 

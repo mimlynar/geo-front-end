@@ -4,6 +4,9 @@ import {PointService} from "../../services/point.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ProjectService} from "../../services/project.service";
 import {Project} from "../../project";
+import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+
+const POINT_VALIDATOR = Validators.pattern("^([-]?)+[0-9]+([.]?[0-9]+)?$");
 
 @Component({
   selector: 'app-points',
@@ -12,49 +15,96 @@ import {Project} from "../../project";
 })
 export class PointsComponent implements OnInit {
 
+
   points: Point[] = [];
   projectId: number;
   project: Project;
+  pointsForm: FormGroup;
 
   constructor(
     private pointService: PointService,
     private projectService: ProjectService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private fb: FormBuilder
   ) {
+
+  }
+
+  get getFormData(): FormArray {
+    return <FormArray>this.pointsForm.get('points');
   }
 
   ngOnInit() {
     this.loadCurrentProjectId();
+    this.initPointsTable();
     this.loadProjectPoints();
     this.loadCurrentProject();
   }
 
-
-  private loadProjectPoints() {
-    this.pointService.getPointsForProject(this.projectId)
-      .subscribe(points => this.points = points);
+  save() {
+    let points: Point[] = this.getFormData.controls.map(control => this.mapData(control));
+    this.pointService.save(points).subscribe(success=>this.ngOnInit());
   }
 
-  delete(point: Point) {
-    this.pointService.delete(point)
-      .subscribe(() => this.removeTaskFromList(point));
+  addNewPoint() {
+    const control = this.getFormData;
+    control.push(this.createNewEmptyRow());
   }
 
-  removeTaskFromList(point: Point) {
-    let index: number = this.points.indexOf(point);
-    if (index !== -1) {
-      this.points.splice(index, 1);
+  delete(index: number) {
+    const control = this.getFormData;
+    let point = this.retrievePointFromControlsByIndex(index);
+    control.removeAt(index);
+    if (point) {
+      this.pointService.delete(point).subscribe();
     }
   }
 
-  createNewEntry() {
-    let point: Point = new Point();
-    point.projectId = this.projectId;
-    this.points.push(point);
+  fillTableWithPoints() {
+    const pointsTable = <FormArray>this.pointsForm.get('points');
+    for (const point of this.points) {
+      const grp = this.fb.group({
+        id: [point.id],
+        number: [point.number, Validators.required],
+        x: [point.x, [Validators.required, POINT_VALIDATOR]],
+        y: [point.y, [Validators.required, POINT_VALIDATOR]],
+      });
+      pointsTable.push(grp);
+    }
   }
 
-  goToProject() {
+  createNewEmptyRow(): FormGroup {
+    return this.fb.group({
+      id: undefined,
+      number: ['', Validators.required],
+      x: ['', [Validators.required, POINT_VALIDATOR]],
+      y: ['', [Validators.required, POINT_VALIDATOR]]
+    });
+  }
+
+  private retrievePointFromControlsByIndex(index: number): Point {
+    const controls = this.getFormData;
+    let pointId = controls.at(index).value.id;
+    return this.points.find(value => value.id === pointId);
+  }
+
+  private initPointsTable() {
+    this.pointsForm = this.fb.group({
+      points: this.fb.array([])
+    });
+  }
+
+  private loadProjectPoints() {
+    this.pointService.getPointsForProject(this.projectId)
+      .subscribe(points => {
+        this.points = points;
+        this.fillTableWithPoints();
+      });
+  }
+
+  saveAndClose() {
+    this.save();
     this.router.navigate(["projects", this.projectId]);
   }
 
@@ -68,10 +118,12 @@ export class PointsComponent implements OnInit {
       .subscribe(project => this.project = project);
   }
 
-  save(): void {
-    this.pointService.save(this.points)
-      .subscribe(points=>this.points = points);
+  private mapData(control: AbstractControl): Point {
+    let point = control.value as Point;
+    point.projectId = this.projectId;
+    return point;
   }
+
 }
 
 
